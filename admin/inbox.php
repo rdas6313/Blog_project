@@ -23,7 +23,7 @@
 					<tbody>
 					<?php
 						$database_conn = new DB;
-						$query		   = "SELECT * FROM msg_table ORDER BY status DESC";
+						$query		   = "SELECT * FROM msg_table ORDER BY status ASC";
 						$statement	   = $database_conn->query($query);
 						if($statement->rowCount()>0){
 							$i=1;
@@ -36,7 +36,7 @@
 							<td><?php echo $row['email']; ?></td>
 							<td><?php echo date::convert($row['date']);?></td>
 							<td><?php echo data_short::msg_short($row['msg']);?></td>
-							<td><img src="img/<?php if($row['status']==0)echo 'email2.png';else echo 'email1.png';?>" id="email"/></td>
+							<td><img src="img/<?php if($row['status']==0)echo 'email1.png';else echo 'email2.png';?>" id="email"/></td>
 							<td><a href="#">View</a> || <a href="#">Reply</a> || <a href="#">Delete</a></td>
 						</tr>
 					<?php

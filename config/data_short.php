@@ -15,5 +15,8 @@ class data_short{
 
 		return $text;
 	}
+	public static function msg_short($data,$limit=30){
+		return substr($data,0,$limit);
+	}
 }
 ?>

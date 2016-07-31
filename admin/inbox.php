@@ -2,11 +2,24 @@
 <?php include_once 'inc/sidebar.php'; ?>
 <style>
 #email{width:25px;padding-top:5px;}
-</style>								
+</style>
+<?php
+	$database_conn = new DB;
+	$msg 		   = "";
+	if(isset($_GET['messageid']) && !empty($_GET['messageid'])){
+		$msgid 		= $_GET['messageid'];
+		$query 		= "DELETE FROM msg_table WHERE id=$msgid";
+		$statement  = $database_conn->delete($query); 
+		if(!$statement){
+			$msg = '<span style="color:red;font-size:18px">Unable To Delete!</span>';
+		}
+	}
+?>								
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Inbox</h2>
-                <div class="block">        
+                <div class="block">
+                <?php echo $msg;?>        
                     <table class="data display datatable" id="example">
 					<thead>
 						<tr>
@@ -21,7 +34,6 @@
 					</thead>
 					<tbody>
 					<?php
-						$database_conn = new DB;
 						$query		   = "SELECT * FROM msg_table ORDER BY status ASC,id DESC";
 						$statement	   = $database_conn->query($query);
 						if($statement->rowCount()>0){
@@ -35,7 +47,7 @@
 							<td><?php echo date::convert($row['date']);?></td>
 							<td><?php echo data_short::msg_short($row['msg']);?></td>
 							<td><img src="img/<?php if($row['status']==0)echo 'email1.png';else echo 'email2.png';?>" id="email"/></td>
-							<td><a href="viewmsg.php?msgid=<?php echo $row['id'];?>">View</a> || <a href="replymsg.php?msgid=<?php echo $row['id'];?>">Reply</a> || <a href="#">Delete</a></td>
+							<td><a href="viewmsg.php?messageid=<?php echo $row['id'];?>">View</a> || <a href="replymsg.php?msgid=<?php echo $row['id'];?>">Reply</a> || <a onclick="return confirm('Are U Sure To Delete!');" href="?messageid=<?php echo $row['id'];?>">Delete</a></td>
 						</tr>
 					<?php
 				}

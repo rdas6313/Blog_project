@@ -92,12 +92,27 @@
         </div>
         <div class="clear">
         </div>
+        <?php
+            $database_conn = new DB;
+            if(isset($_GET['messageid']) && !empty($_GET['messageid'])){
+                $msgid          = $_GET['messageid'];
+                $query          = "UPDATE msg_table SET status=1 WHERE id=$msgid";
+                $statement      = $database_conn->query($query);
+                $statement->execute();
+            }
+            $msg           = 0;
+            $query         = "SELECT * FROM msg_table WHERE status=0";
+            $statement     = $database_conn->query($query);
+            if($statement->rowCount()>0){
+                $msg = $statement->rowCount();
+            }
+        ?>
         <div class="grid_12">
             <ul class="nav main">
                 <li class="ic-dashboard"><a href="index.php"><span>Dashboard</span></a> </li>
-                <li class="ic-form-style"><a href=""><span>User Profile</span></a></li>
+                <li class="ic-form-style"><a href="#"><span>User Profile</span></a></li>
 				<li class="ic-typography"><a href="changepassword.php"><span>Change Password</span></a></li>
-				<li class="ic-grid-tables"><a href="inbox.php"><span>Inbox</span></a></li>
+				<li class="ic-grid-tables"><a href="inbox.php"><span>Inbox<?php if($msg>0)echo '('.$msg.')';?></span></a></li>
                 <li class="ic-charts"><a href="#"><span>Visit Website</span></a></li>
             </ul>
         </div>

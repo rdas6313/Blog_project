@@ -7,15 +7,12 @@ a:link.rep{background-color: #d9d9d9;color:black;font-size:15px;padding:7px 10px
 a:hover.rep{background-color: #f2f2f2;}
 </style>
 <?php
-    if(!isset($_GET['msgid']) || empty($_GET['msgid'])){
+    if(!isset($_GET['messageid']) || empty($_GET['messageid'])){
         header('Location: inbox.php');
     }else{
-        $msgid = $_GET['msgid'];
+        $msgid = $_GET['messageid'];
     }
-    $database_conn  = new DB;
-    $query          = "UPDATE msg_table SET status=1 WHERE id=$msgid";
-    $statement      = $database_conn->query($query);
-    $statement->execute(); 
+    $database_conn  = new DB; 
 ?>
     <div class="grid_10">
 	

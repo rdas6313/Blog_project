@@ -2,7 +2,7 @@
 <?php include_once 'inc/sidebar.php'; ?>
 <style>
 #email{width:25px;padding-top:5px;}
-</style>
+</style>								
         <div class="grid_10">
             <div class="box round first grid">
                 <h2>Inbox</h2>
@@ -10,8 +10,7 @@
                     <table class="data display datatable" id="example">
 					<thead>
 						<tr>
-							<th>Serial No.</th>
-							<th>Name</th>
+							<th width="10%">Name</th>
 							<th>Subject</th>
 							<th>Email</th>
 							<th>Date</th>
@@ -23,21 +22,20 @@
 					<tbody>
 					<?php
 						$database_conn = new DB;
-						$query		   = "SELECT * FROM msg_table ORDER BY status ASC";
+						$query		   = "SELECT * FROM msg_table ORDER BY status ASC,id DESC";
 						$statement	   = $database_conn->query($query);
 						if($statement->rowCount()>0){
-							$i=1;
+							//$i=1;
 							while($row = $statement->fetch()){
 					?>
 						<tr class="odd gradeX">
-							<td><?php echo $i++;?></td>
 							<td><?php echo $row['name'];?></td>
 							<td><?php echo $row['sub'];?></td>
 							<td><?php echo $row['email']; ?></td>
 							<td><?php echo date::convert($row['date']);?></td>
 							<td><?php echo data_short::msg_short($row['msg']);?></td>
 							<td><img src="img/<?php if($row['status']==0)echo 'email1.png';else echo 'email2.png';?>" id="email"/></td>
-							<td><a href="#">View</a> || <a href="#">Reply</a> || <a href="#">Delete</a></td>
+							<td><a href="viewmsg.php?msgid=<?php echo $row['id'];?>">View</a> || <a href="replymsg.php?msgid=<?php echo $row['id'];?>">Reply</a> || <a href="#">Delete</a></td>
 						</tr>
 					<?php
 				}

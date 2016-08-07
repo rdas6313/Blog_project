@@ -28,6 +28,8 @@
 					//session::start();
 					session::set('id',$row['id']);
 					session::set('username',$row['username']);
+					session::set('role',$row['role']);
+					session::set('name',$row['name']);
 					header('location:index.php');
 
 				}else{

@@ -55,6 +55,9 @@
 			</div>
 		</form><!-- form -->
 		<div class="button">
+			<a href="forgetpassword.php">Forget Password!</a>
+		</div>
+		<div class="button">
 			<a href="#">Training with live project</a>
 		</div><!-- button -->
 	</section><!-- content -->

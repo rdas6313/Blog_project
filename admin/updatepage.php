@@ -1,5 +1,7 @@
 <?php include 'inc/header.php'; ?>
 <?php
+    if($user_role!=1)
+        header('Location: index.php');
     if(!isset($_GET['pageid']) || empty($_GET['pageid'])){
         header('Location: index.php');
     }else{

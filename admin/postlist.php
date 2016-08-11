@@ -41,7 +41,10 @@
 					</thead>
 					<tbody>
 					<?php
-							$query		   = "SELECT content_table.*,category_table.category FROM content_table JOIN category_table ON content_table.category=category_table.id";
+							if($user_role!=1)
+								$query		   = "SELECT content_table.*,category_table.category FROM content_table JOIN category_table ON content_table.category=category_table.id WHERE user_id=$user_id";
+							else
+								$query		   = "SELECT content_table.*,category_table.category FROM content_table JOIN category_table ON content_table.category=category_table.id";
 							$statement     = $database_conn->query($query);
 							if($statement->rowCount()>0){
 								while($row=$statement->fetch()){

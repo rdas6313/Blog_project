@@ -5,37 +5,41 @@
     $msg        = "";
     $database_conn      =   new DB;
     if($_SERVER['REQUEST_METHOD']=='POST'){
-        if(!empty($_POST['password2']) || !empty($_POST['password1']) && !empty($_POST['name']) ){
+        if(!empty($_POST['password2']) || !empty($_POST['password1']) && !empty($_POST['name']) && !empty($_POST['email']) ){
             $name               =   validation::valid($_POST['name']);
             $username           =   $_POST['username'];
             $old_password       =   md5($_POST['password1']);
             $password           =   $_POST['password2'];
             $confirm_password   =   $_POST['password3'];
-            $query              =   "SELECT * FROM user_id WHERE password='$old_password' AND username='$username'";
-            $statement          =   $database_conn->query($query);
-            if($statement->rowCount()>0){
-                if($password!=$confirm_password){
-                $msg = '<span style="color:red;font-size:18px">Password Not Matching.</span>';
+            $email              =   validation::valid($_POST['email']);
+            if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                $msg = '<span style="color:red;font-size:18px">Invalid Email!</span>';
             }else{
-                if(empty($password))
-                    $query    = "UPDATE user_id SET name='$name'WHERE id=$edituserid";
-                else{    
-                    $password = md5($password);
-                    $query    = "UPDATE user_id SET name='$name',password='$password' WHERE id=$edituserid";
-                    
-                }
-                $statement=$database_conn->update($query);
-                $statement->execute();
-                if($statement->rowCount()>0){
-                    $msg    = '<span style="color:green;font-size:18px">Account Updated Successfully!</span>';
-                }else{
-                    $msg    = '<span style="color:red;font-size:18px">Already Updated!</span>';
-                }
-        }    
-            }else{
-                $msg = '<span style="color:red;font-size:18px">Wrong Password!</span>';
+                    $query              =   "SELECT * FROM user_id WHERE password='$old_password' AND username='$username'";
+                    $statement          =   $database_conn->query($query);
+                    if($statement->rowCount()>0){
+                        if($password!=$confirm_password){
+                        $msg = '<span style="color:red;font-size:18px">Password Not Matching.</span>';
+                    }else{
+                        if(empty($password))
+                            $query    = "UPDATE user_id SET name='$name',email='$email' WHERE id=$edituserid";
+                        else{    
+                            $password = md5($password);
+                            $query    = "UPDATE user_id SET name='$name',password='$password',email='$email' WHERE id=$edituserid";
+                            
+                        }
+                        $statement=$database_conn->update($query);
+                        $statement->execute();
+                        if($statement->rowCount()>0){
+                            $msg    = '<span style="color:green;font-size:18px">Account Updated Successfully!</span>';
+                        }else{
+                            $msg    = '<span style="color:red;font-size:18px">Already Updated!</span>';
+                        }
+                }    
+                    }else{
+                        $msg = '<span style="color:red;font-size:18px">Wrong Password!</span>';
+                    }
             }
-            
     }else{
         $msg    = '<span style="color:red;font-size:18px">You Must Fill The Name Field.</span>';
     }
@@ -68,6 +72,14 @@
                             </td>
                         </tr>
                         <tr>
+                        <tr>
+                            <td>
+                                <label>Email</label>
+                            </td>
+                            <td>
+                                <input type="text" name="email" value="<?php echo $row['email'];?>" class="medium" required/>
+                            </td>
+                        </tr>
                             <td>
                                 <label>User Name</label>
                             </td>

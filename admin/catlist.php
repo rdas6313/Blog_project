@@ -27,7 +27,7 @@
 					<tbody>
 					<?php 
 						$database_conn=new DB;
-						$query="SELECT * FROM category_table";
+						$query = "SELECT * FROM category_table";
 						$statement=$database_conn->query($query);
 						if($statement->rowCount()>0){
 							$i=1;
@@ -37,7 +37,7 @@
 						<tr class="odd gradeX">
 							<td><?php echo $i++;?></td>
 							<td><?php echo $row['category'];?></td>
-							<td><a href="editcat.php?catid=<?php echo $row['id'];?>">Edit</a> || <a onclick="return confirm('Are You sure to delete!');" href="catlist.php?catid=<?php echo $row['id'];?>">Delete</a></td>
+							<td><a  href="editcat.php?catid=<?php echo $row['id'];?>">Edit</a><?php if($user_role==1) echo '|| <a onclick="return confirm(\'Are You sure to delete!\');" href="catlist.php?catid='.$row['id'].'">Delete</a>';?></td>
 						</tr>
 					<?php
 					}

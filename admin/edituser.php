@@ -1,6 +1,8 @@
 <?php include_once 'inc/header.php'; ?>
 <?php include_once 'inc/sidebar.php';?>
 <?php
+    if($user_role!=1)
+        header('Location: index.php');
     if(!isset($_GET['edituserid']) || empty($_GET['edituserid'])){
         header('Location: userlist.php');
     }else{
@@ -9,20 +11,24 @@
     $msg = "";
     $database_conn      =   new DB;
     if($_SERVER['REQUEST_METHOD']=='POST'){
-        if(!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['role'])){
+        if(!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['role']) && !empty($_POST['email'])){
             $name               =   validation::valid($_POST['name']);
             $password           =   $_POST['password1'];
             $confirm_password   =   $_POST['password2'];
             $username           =   validation::valid($_POST['username']);
+            $email              =   validation::valid($_POST['email']);
             $role               =   $_POST['role'];
-            if($password!=$confirm_password){
+            if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                $msg = '<span style="color:red;font-size:18px">Invalid Email!</span>';
+            }else{
+                if($password!=$confirm_password){
                 $msg = '<span style="color:red;font-size:18px">Password Not Matching.</span>';
             }else{
                 if(empty($password))
-                    $query    ="UPDATE user_id SET name='$name',username='$username',role=$role WHERE id=$edituserid";
+                    $query    ="UPDATE user_id SET name='$name',username='$username',role=$role,email='$email' WHERE id=$edituserid";
                 else{    
                     $password = md5($password);
-                    $query    ="UPDATE user_id SET name='$name',username='$username',password='$password',role=$role WHERE id=$edituserid";
+                    $query    ="UPDATE user_id SET name='$name',username='$username',password='$password',role=$role,email='$email' WHERE id=$edituserid";
                     
                 }
                 $statement=$database_conn->update($query);
@@ -32,6 +38,7 @@
                 }else{
                     $msg    = '<span style="color:red;font-size:18px">Already Updated!</span>';
                 }
+            }
         }
     }else{
         $msg    = '<span style="color:red;font-size:18px">You Must Fill The Name Field.</span>';
@@ -62,6 +69,14 @@
                             </td>
                             <td>
                                 <input type="text" name="name" value="<?php echo $row['name'];?>" class="medium" />
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>
+                                <label>Email</label>
+                            </td>
+                            <td>
+                                <input type="text" name="email" value="<?php echo $row['email'];?>" class="medium" />
                             </td>
                         </tr>
                         <tr>

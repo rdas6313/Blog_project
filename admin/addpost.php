@@ -26,7 +26,7 @@
     			$unique_name  = substr(md5(time()),0,10).'.'.$extension;
     			$new_location = '../post_image/'.$unique_name;
     			move_uploaded_file($tmp_location,$new_location);
-    			$query="INSERT INTO content_table (id,title,author,category,content,img) VALUES (NULL,'$title','$author',$category,'$content','$unique_name')";
+    			$query="INSERT INTO content_table (id,title,author,category,content,img,user_id) VALUES (NULL,'$title','$author',$category,'$content','$unique_name',$user_id)";
     			$statement = $database_conn->insert($query);
     			$statement->execute();
     			if($statement->rowCount()>0){

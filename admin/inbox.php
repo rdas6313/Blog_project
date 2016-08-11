@@ -4,6 +4,8 @@
 #email{width:25px;padding-top:5px;}
 </style>
 <?php
+	if($user_role!=1)
+		header('Location: index.php');
 	$database_conn = new DB;
 	$msg 		   = "";
 	if(isset($_GET['messageid']) && !empty($_GET['messageid'])){

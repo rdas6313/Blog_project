@@ -1,14 +1,21 @@
 <?php include_once 'inc/header.php'; ?>
 <?php include_once 'inc/sidebar.php';?>
 <?php
+    if($user_role!=1)
+        header('Location: index.php');
     $msg = "";
     if($_SERVER['REQUEST_METHOD']=='POST'){
-        if(!empty($_POST['username']) && !empty($_POST['password1']) && !empty($_POST['password2']) && !empty($_POST['role'])){
+        if(!empty($_POST['username']) && !empty($_POST['password1']) && !empty($_POST['password2']) && !empty($_POST['role']) && !empty($_POST['role'])){
             $name               =   validation::valid($_POST['name']);
             $password           =   md5($_POST['password1']);
             $confirm_password   =   md5($_POST['password2']);
             $username           =   validation::valid($_POST['username']);
+            $email           	=   validation::valid($_POST['email']);
             $role               =   $_POST['role'];
+            if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+            	$msg    = '<span style="color:green;font-size:18px">Invalid Email.!</span>';
+            }else{
+
             $database_conn      =   new DB;
             $query              =   "SELECT * FROM user_id WHERE username='$username'";
             $statement          =   $database_conn->query($query);
@@ -17,15 +24,16 @@
             }else if($password!=$confirm_password){
                 $msg = '<span style="color:red;font-size:18px">Password Not Matching.</span>';
             }else{
-                $query="INSERT INTO user_id (id,username,password,name,role) VALUES (:placeholder1,:placeholder2,:placeholder3,:placeholder4,:placeholder5)";
+                $query="INSERT INTO user_id (id,username,password,name,role,email) VALUES (:placeholder1,:placeholder2,:placeholder3,:placeholder4,:placeholder5,:placeholder6)";
                 $statement=$database_conn->insert($query);
-                $statement->execute(array(':placeholder1'=>NULL,':placeholder2'=>$username,':placeholder3'=>$password,':placeholder4'=>$name,':placeholder5'=>$role));
+                $statement->execute(array(':placeholder1'=>NULL,':placeholder2'=>$username,':placeholder3'=>$password,':placeholder4'=>$name,':placeholder5'=>$role,':placeholder6'=>$email));
                 if($statement->rowCount()>0){
                     $msg    = '<span style="color:green;font-size:18px">Account Created Successfully!</span>';
                 }else{
                     $msg    = '<span style="color:red;font-size:18px">Unable to Create Account!</span>';
                 }
         }
+            }
         }else{
                 $msg = '<span style="color:red;font-size:18px">You Must Fill Out The Field!</span>';
         }     
@@ -56,6 +64,14 @@
                             </td>
                             <td>
                                 <input type="text" name="username" placeholder="Enter User Name..." class="medium" required="required" />
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>
+                                <label>Email</label>
+                            </td>
+                            <td>
+                                <input type="text" name="email" placeholder="Enter Your Email Address..." class="medium" />
                             </td>
                         </tr>					
                         <tr>

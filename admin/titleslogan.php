@@ -1,6 +1,8 @@
 ﻿<?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 <?php
+    if($user_role!=1)
+        header('Location: index.php');
     $msg           = "";
     $database_conn = new DB;
     if($_SERVER['REQUEST_METHOD']=='POST'){

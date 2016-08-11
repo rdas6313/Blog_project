@@ -3,6 +3,8 @@
         <div class="grid_10">
             <div class="box round first grid">
                <?php
+               		if($user_role!=1)
+						header('Location: index.php');
                		$database_conn	=	new DB;
 					if(isset($_GET['deluserid']) && !empty($_GET['deluserid'])){
 						$deluserid 			=	$_GET['deluserid'];
@@ -21,6 +23,7 @@
 							<th>Serial No.</th>
 							<th>Username</th>
 							<th>Name</th>
+							<th>Email</th>
 							<th>Role</th>
 							<th>Action</th>
 						</tr>
@@ -38,6 +41,7 @@
 							<td><?php echo $i++;?></td>
 							<td><?php echo $row['username'];?></td>
 							<td><?php echo $row['name'];?></td>
+							<td><?php echo $row['email'];?></td>
 							<td><?php 
 								if($row['role']==1)
 									echo 'Admin';

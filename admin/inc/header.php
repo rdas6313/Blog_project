@@ -115,10 +115,12 @@
             <ul class="nav main">
                 <li class="ic-dashboard"><a href="index.php"><span>Dashboard</span></a> </li>
 				<li class="ic-typography"><a href="editprofile.php"><span>Edit Profile</span></a></li>
-				<li class="ic-grid-tables"><a href="inbox.php"><span>Inbox<?php if($msg>0)echo '('.$msg.')';?></span></a></li>
+                <?php if($user_role==1){?>
+				<li class="ic-grid-tables"><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="inbox.php"><span>Inbox<?php if($msg>0)echo '('.$msg.')';?></span></a></li>
                 <li class="ic-charts"><a href="#"><span>Visit Website</span></a></li>
-                <li class="ic-charts"><a href="adduser.php"><span>Add User</span></a></li>
-                <li class="ic-charts"><a href="userlist.php"><span>User List</span></a></li>
+                <li class="ic-charts"><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="adduser.php"><span>Add User</span></a></li>
+                <li class="ic-charts"><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="userlist.php"><span>User List</span></a></li>
+                <?php }?>
             </ul>
         </div>
         <div class="clear">

@@ -5,16 +5,16 @@
                     <ul class="section menu">
                        <li><a class="menuitem">Site Option</a>
                             <ul class="submenu">
-                                <li><a href="titleslogan.php">Title & Slogan</a></li>
-                                <li><a href="social.php">Social Media</a></li>
-                                <li><a href="copyright.php">Copyright</a></li>
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="titleslogan.php">Title & Slogan</a></li>
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="social.php">Social Media</a></li>
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="copyright.php">Copyright</a></li>
                                 
                             </ul>
                         </li>
                         
                          <li><a class="menuitem">Pages</a>
                             <ul class="submenu">
-                                <li><a href="addpage.php">Add Page</a></li>
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="addpage.php">Add Page</a></li>
                                 <?php
                                 	$database_conn = new DB;
                                 	$query		   = "SELECT * FROM page_table";
@@ -22,7 +22,7 @@
                                 	if($statement->rowCount()>0){
                                 		while($row = $statement->fetch()){
                                 ?>
-                                <li><a href="updatepage.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title']; ?></a></li>
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="updatepage.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title']; ?></a></li>
                                 <?php
                             }	}
                                 ?>

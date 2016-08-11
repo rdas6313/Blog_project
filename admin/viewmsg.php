@@ -7,6 +7,8 @@ a:link.rep{background-color: #d9d9d9;color:black;font-size:15px;padding:7px 10px
 a:hover.rep{background-color: #f2f2f2;}
 </style>
 <?php
+    if($user_role!=1)
+        header('Location: index.php');
     if(!isset($_GET['messageid']) || empty($_GET['messageid'])){
         header('Location: inbox.php');
     }else{

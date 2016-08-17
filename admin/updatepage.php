@@ -10,7 +10,7 @@
 	$database_conn = new DB;
 	$msg           = "";
 	if($_SERVER['REQUEST_METHOD']=='POST'){
-		if($_POST['delete']=='Delete'){       /* Delete The Page  start */
+		if(@$_POST['delete']=='Delete'){       /* Delete The Page  start */
                     $query      = "DELETE FROM page_table WHERE id=$pageid";
                     $statement  = $database_conn->delete($query);
                     if($statement){

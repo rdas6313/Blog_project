@@ -1,37 +1,24 @@
-<?php include_once 'view/header.php';?>
-<?php include_once 'config/db_connection.php';?>
-<?php include_once 'config/date.php';?>	
-<?php include_once 'config/data_short.php';?>	
-
+<?php include_once 'view/header.php';?>	
 <?php
 	if(isset($_GET['category']) && !empty($_GET['category'])){
-		$cat=$_GET['category'];
+		$cat = validation::valid($_GET['category']);
 	}else{
 		header('location: 404.php');
 	}
-	$db=new DB();
-	$q="SELECT * FROM content_table WHERE category='".$cat."'";
-	$s=$db->query($q);
-	define('PAGE',3,0);
-    $totalrow=$s->rowCount();
-	if($totalrow<1){
-		header('location: 404.php');	
-	}
-	$totalpage=ceil($totalrow/PAGE);
-	if(isset($_GET['page'])){
-		if($_GET['page']>0 && $_GET['page']<=$totalpage)
-			 $page=$_GET['page'];
-		else
-			header('location: 404.php');
-
+	$database_conn	= new DB();
+	$query			= "SELECT * FROM content_table WHERE category=$cat";
+	$statement		= $database_conn->query($query);
+	$per_page 		= 3;
+    $totalrow		= $statement->rowCount();
+	$totalpage		= ceil($totalrow/$per_page);
+	if(isset($_GET['page']) && !empty($_GET['page'])){
+		$page 		= $_GET['page'];
 	}else{
-		$page=1;
+		$page 		= 1;
 	}
-	$start=($page-1)*PAGE;
-	$q="SELECT * FROM content_table WHERE category='".$cat."' ORDER BY id DESC LIMIT ".$start.",".PAGE;
-	$s=$db->query($q);
-	$d=new date;
-	$data=new data_short;
+	$start 			= ($page-1)*$per_page;
+	$query 			= "SELECT * FROM content_table WHERE category=$cat ORDER BY id DESC LIMIT $start,$per_page";
+	$statement 		= $database_conn->query($query);
 	$limit=200;
 ?>
 
@@ -50,13 +37,13 @@
 	<div class="contentsection contemplete clear">
 		<div class="maincontent clear">
 		<?php
-			while($row=$s->fetch()){
+			while($row = $statement->fetch()){
 			echo '<div class="samepost clear">
 				<h2><a href="post.php?id='.$row['id'].'">'.$row['title'].'</a></h2>
-				<h4>'.$d->convert($row['date']).', By <a href="#">'.$row['author'].'</a></h4>
+				<h4>'.date::convert($row['date']).', By <a href="#">'.$row['author'].'</a></h4>
 				 <a href="post.php?id='.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
 				<p>
-					'.$data->short($row['content'],$limit).'
+					'.data_short::short($row['content'],$limit).'
 				</p>
 				<div class="readmore clear">
 					<a href="post.php?id='.$row['id'].'">Read More</a>
@@ -64,12 +51,12 @@
 			</div>';
 		}
 		
-		if($page-1>=1){
-			echo '<a href="category.php?page='.($page-1).'&category='.$cat.'" class="ml" id="left">Less</a>';
-		}
-		if($page+1<=$totalpage){
-			echo '<a href="category.php?page='.($page+1).'&category='.$cat.'" class="ml" id="right">More</a>';
-		}
+			if($page-1>=1){
+				echo '<a href="category.php?page='.($page-1).'&category='.$cat.'" class="ml" id="left">Less</a>';
+			}
+			if($page+1<=$totalpage){
+				echo '<a href="category.php?page='.($page+1).'&category='.$cat.'" class="ml" id="right">More</a>';
+			}
 		?>
 		</div>
 		

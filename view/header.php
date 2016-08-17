@@ -1,3 +1,9 @@
+<?php
+include_once 'config/db_connection.php';
+include_once 'config/date.php';
+include_once 'config/data_short.php';
+include_once 'config/validation.php';	
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,19 +43,34 @@ $(window).load(function() {
 
 <body>
 	<div class="headersection templete clear">
-		<a href="index.php">
+		<a href="index.php">	
 			<div class="logo">
-				<img src="images/logo.png" alt="Logo"/>
-				<h2>Blog</h2>
-				<p>Its a programming blog</p>
+				<?php
+					$database_conn = new DB;
+					$query 		   = "SELECT * FROM title_slogan_table";
+					$statement     = $database_conn->query($query);
+					$row 		   = $statement->fetch();
+					if($statement->rowCount()>0){	
+				?>
+				<img src="post_image/<?php echo $row['logo'];?>" alt="Logo"/>
+				<h2><?php echo $row['title'];?></h2>
+				<p><?php echo $row['slogan'];?></p>
+				<?php }?>
 			</div>
 		</a>
 		<div class="social clear">
 			<div class="icon clear">
-				<a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-				<a href="#" target="_blank"><i class="fa fa-google-plus"></i></a>
+			<?php
+				$query 		   = "SELECT * FROM social_table";
+				$statement     = $database_conn->query($query);
+				$row 		   = $statement->fetch();
+				if($statement->rowCount()>0){	
+			?>
+				<a href="<?php echo $row['fb'];?>" target="_blank"><i class="fa fa-facebook"></i></a>
+				<a href="<?php echo $row['tw'];?>" target="_blank"><i class="fa fa-twitter"></i></a>
+				<a href="<?php echo $row['ln'];?>" target="_blank"><i class="fa fa-linkedin"></i></a>
+				<a href="<?php echo $row['gp'];?>" target="_blank"><i class="fa fa-google-plus"></i></a>
+			<?php } ?>
 			</div>
 			<div class="searchbtn clear">
 			<form action="search.php" method="get">
@@ -61,7 +82,17 @@ $(window).load(function() {
 	</div>
 <div class="navsection templete">
 	<ul>
+		<?php
+			$query 		   = "SELECT * FROM page_table";
+			$statement     = $database_conn->query($query);	
+		?>
 		<li><a id="active" href="index.php">Home</a></li>
+		<?php 
+			if($statement->rowCount()>0){
+				while($row = $statement->fetch()){
+		?>
+		<li><a href="page.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
+		<?php } }?>
 		<li><a href="about.php">About</a></li>	
 		<li><a href="contact.php">Contact</a></li>
 	</ul>

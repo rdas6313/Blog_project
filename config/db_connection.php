@@ -3,15 +3,11 @@ include 'configure.php';
 
 class DB{
 	public $conn;
-	public $totalrow;
 	public function __construct(){
 		if(!isset($conn)){
 			try{
 				$this->conn=new PDO(DBSOFT.':host='.HOST.';dbname='.DBNAME,USERNAME,PASSWORD);
 				$this->conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-				$s=$this->conn->prepare("SELECT * FROM content_table");
-				$s->execute();
-				$this->totalrow=$s->rowCount();
 			}
 			catch(PDOException $e){
 				echo $e->getMessage();

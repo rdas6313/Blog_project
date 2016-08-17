@@ -1,36 +1,32 @@
 <?php
-include_once 'config/db_connection.php';
-include_once 'config/date.php';
-include_once 'config/data_short.php';
-$db=new DB;
-$q="SELECT DISTINCT category FROM content_table";
-$s=$db->query($q);
+$database_conn = new DB;
+$query 		   = "SELECT DISTINCT category_table.category,category_table.id FROM category_table INNER JOIN content_table ON category_table.id=content_table.category";
+$statement 	   = $database_conn->query($query);
 ?>
 <div class="sidebar clear">
 			<div class="samesidebar clear">
 				<h2>Categories</h2>
 					<ul>
 						<?php
-						while($row=$s->fetch()){
-							echo '<li><a href="category.php?category='.$row['category'].'">'.$row['category'].'</a></li>';
+						while($row = $statement->fetch()){
+							echo '<li><a href="category.php?category='.$row['id'].'">'.$row['category'].'</a></li>';
 					}
 						?>
 					</ul>
 			</div>
 	<?php
-		$q="SELECT * FROM content_table ORDER BY id DESC LIMIT 4";
-		$s=$db->query($q);
-		$data=new data_short;
+		$query 		= "SELECT * FROM content_table ORDER BY id DESC LIMIT 4";
+		$statement  = $database_conn->query($query);
 		$limit=100;
 	?>
 			<div class="samesidebar clear">
 				<h2>Latest articles</h2>
 				<?php
-					while($row=$s->fetch()){
+					while($row=$statement->fetch()){
 					echo '<div class="popular clear">
 						<h3><a href="post.php?id='.$row['id'].'">'.$row['title'].'</a></h3>
-						<a href="post.php?id='.$row['id'].'"><img src="images/'.$row['img'].'" alt="post image"/></a>
-						<p>'.$data->short($row['content'],$limit).'</p>	
+						<a href="post.php?id='.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
+						'.data_short::short($row['content'],$limit).'	
 					</div>';
 				}
 				?>				

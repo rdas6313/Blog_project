@@ -7,6 +7,48 @@ include_once 'config/validation.php';
 <!DOCTYPE html>
 <html>
 <head>
+	<?php
+		$database_conn = new DB; 
+		if(isset($_GET['pageid']) && !empty($_GET['pageid'])){
+			$pageid 	= $_GET['pageid'];
+			$query		= "SELECT * FROM page_table WHERE id=$pageid";
+			$statement	= $database_conn->query($query);
+			$row 		= $statement->fetch();
+	?>
+			<title><?php echo $row['title'];?></title>
+	<?php				
+		}else if(isset($_GET['id']) && !empty($_GET['id'])){
+			$id 		= $_GET['id'];
+			$query		= "SELECT * FROM content_table WHERE id=$id";
+			$statement	= $database_conn->query($query);
+			$row 		= $statement->fetch();
+	?>
+			<title><?php echo $row['title'];?></title>
+	<?php
+		}else if(isset($_GET['category']) && !empty($_GET['category'])){
+			$cat 		= $_GET['category'];
+			$query		= "SELECT * FROM category_table WHERE id=$cat";
+			$statement	= $database_conn->query($query);
+			$row 		= $statement->fetch();
+	?>
+			<title><?php echo $row['category'].' category Results';?></title>
+	<?php
+		}else if(isset($_GET['search']) && !empty($_GET['search'])){
+			$search 	= $_GET['search'];
+	?>
+			<title><?php echo $search.' search Results';?></title>
+	<?php
+		}else{
+			$pagename = $_SERVER['SCRIPT_NAME'];
+			$pagename = basename($pagename,'.php');
+			if($pagename=='index'){
+				$pagename = 'Home';
+			}
+	?>
+		<title><?php echo $pagename;?></title>
+	<?php
+		}
+	?>
 	<title>Basic Website</title>
 	<meta name="language" content="English">
 	<meta name="description" content="It is a website about education">
@@ -93,7 +135,6 @@ $(window).load(function() {
 		?>
 		<li><a href="page.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
 		<?php } }?>
-		<li><a href="about.php">About</a></li>	
 		<li><a href="contact.php">Contact</a></li>
 	</ul>
 </div>

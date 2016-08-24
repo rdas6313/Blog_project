@@ -8,6 +8,8 @@ include_once 'config/validation.php';
 <html>
 <head>
 	<?php
+		$pageid 	= NULL;
+		$pagename 	= NULL;
 		$database_conn = new DB; 
 		if(isset($_GET['pageid']) && !empty($_GET['pageid'])){
 			$pageid 	= $_GET['pageid'];
@@ -51,9 +53,21 @@ include_once 'config/validation.php';
 	?>
 	<title>Basic Website</title>
 	<meta name="language" content="English">
-	<meta name="description" content="It is a website about education">
-	<meta name="keywords" content="blog,cms blog">
-	<meta name="author" content="Delowar">
+	<?php
+		if(isset($_GET['id'])){
+	?>
+			<meta name="description" content="<?php echo $row['description']?>">
+			<meta name="keywords" content="<?php echo $row['tag']?>">
+			<meta name="author" content="<?php echo $row['author']?>">
+	<?php 
+		}else{
+	?>
+			<meta name="description" content="It is a Web devolpment tutorial site">
+			<meta name="keywords" content="Html,Css,Php,Javascript,Python">
+			<meta name="author" content="Raja">
+	<?php
+		}
+	?>
 	<link rel="stylesheet" href="font-awesome-4.5.0/css/font-awesome.css">	
 	<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="style.css">
@@ -128,13 +142,13 @@ $(window).load(function() {
 			$query 		   = "SELECT * FROM page_table";
 			$statement     = $database_conn->query($query);	
 		?>
-		<li><a id="active" href="index.php">Home</a></li>
+		<li><a <?php if($pagename=='Home') echo 'id="active"';?> href="index.php">Home</a></li>
 		<?php 
 			if($statement->rowCount()>0){
 				while($row = $statement->fetch()){
 		?>
-		<li><a href="page.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
+		<li><a <?php if($pageid==$row['id']) echo 'id="active"'; ?> href="page.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
 		<?php } }?>
-		<li><a href="contact.php">Contact</a></li>
+		<li><a <?php if($pagename=='contact') echo 'id="active"';?> href="contact.php">Contact</a></li>
 	</ul>
 </div>

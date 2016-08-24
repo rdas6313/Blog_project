@@ -29,6 +29,12 @@
                                 <li><a>Contact Us</a></li>
                             </ul>
                         </li>
+                         <li><a class="menuitem">Slide Option</a>
+                            <ul class="submenu">
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="addslider.php">Add Slide</a> </li>
+                                <li><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="sliderlist.php">Slide List</a> </li>
+                            </ul>
+                        </li>
                         <li><a class="menuitem">Category Option</a>
                             <ul class="submenu">
                                 <li><a href="addcat.php">Add Category</a> </li>

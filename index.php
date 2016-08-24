@@ -12,15 +12,7 @@
 	$statement 	   = $database_conn->query($query);
 ?>
 
-<div class="slidersection templete clear">
-    <div id="slider">
-        <a href="#"><img src="images/slideshow/01.jpg" alt="nature 1" title="This is slider one Title or Description" /></a>
-        <a href="#"><img src="images/slideshow/02.jpg" alt="nature 2" title="This is slider Two Title or Description" /></a>
-        <a href="#"><img src="images/slideshow/03.jpg" alt="nature 3" title="This is slider three Title or Description" /></a>
-        <a href="#"><img src="images/slideshow/04.jpg" alt="nature 4" title="This is slider four Title or Description" /></a>
-    </div>
-
-</div>
+<?php include 'view/slider.php';?>
 
 	<div class="contentsection contemplete clear">
 		<div class="maincontent clear">
@@ -29,7 +21,7 @@
 					while($row = $statement->fetch()){
 						echo '<div class="samepost clear">
 							<h2><a href="post.php?id='.$row['id'].'">'.$row['title'].'</a></h2>
-							<h4>'.date::convert($row['date']).', By <a href="#">'.$row['author'].'</a></h4>
+							<h4>'.date::convert($row['date']).', By <a href="search.php?search='.$row['author'].'">'.$row['author'].'</a></h4>
 							 <a href="post.php?id='.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
 							'.data_short::short($row['content'],250).'
 							<div class="readmore clear">

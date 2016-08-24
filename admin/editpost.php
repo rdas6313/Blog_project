@@ -15,12 +15,14 @@
         }
     }
 	if($_SERVER['REQUEST_METHOD']=='POST'){
-		if($_POST['title']==NULL || $_POST['author']==NULL || $_POST['category']==NULL || $_POST['content']==NULL || $_FILES['image']['name']==NULL){
+		if($_POST['des']==NULL || $_POST['title']==NULL || $_POST['tag']==NULL || $_POST['author']==NULL || $_POST['category']==NULL || $_POST['content']==NULL || $_FILES['image']['name']==NULL){
 			$msg='<span style="color:red;font-size:18px">Plz Fill Out All The Field</span>';
 		}else{
 			$title   	=validation::valid($_POST['title']);
 			$author  	=validation::valid($_POST['author']);
 			$category   =validation::valid($_POST['category']);
+            $tag        =validation::valid($_POST['tag']);
+            $des   =validation::valid($_POST['des']);
 			$content    =$_POST['content'];
     	/*   	Woking With Image Files */
     		$name  		  = $_FILES['image']['name'];
@@ -37,7 +39,7 @@
     			$unique_name  = substr(md5(time()),0,10).'.'.$extension;
     			$new_location = '../post_image/'.$unique_name;
     			move_uploaded_file($tmp_location,$new_location);
-    			$query="UPDATE content_table SET title='$title',author='$author',category=$category,content='$content',img='$unique_name' WHERE id=$editid";
+    			$query="UPDATE content_table SET title='$title',author='$author',category=$category,content='$content',img='$unique_name',tag='$tag',description='$des' WHERE id=$editid";
     			$statement = $database_conn->insert($query);
     			$statement->execute();
     			if($statement->rowCount()>0){
@@ -132,6 +134,23 @@
                             }else{
                                 header('Location:postlist.php');
                             }?>
+
+                         <tr>
+                            <td>
+                                <label>Tags</label>
+                            </td>
+                            <td>
+                                <input type="text" name="tag" placeholder="<?php echo $content_row['tag'];?>" class="medium" />
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>
+                                <label>Description</label>
+                            </td>
+                            <td>
+                                <input type="text" name="des" placeholder="<?php echo $content_row['description'];?>" class="medium" />
+                            </td>
+                        </tr>    
 						<tr>
                             <td></td>
                             <td>

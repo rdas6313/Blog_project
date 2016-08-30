@@ -31,23 +31,23 @@
 		<?php
 			while($row = $statement->fetch()){
 			echo '<div class="samepost clear">
-				<h2><a href="post.php?id='.$row['id'].'">'.$row['title'].'</a></h2>
-				<h4>'.date::convert($row['date']).', By <a href="#">'.$row['author'].'</a></h4>
-				 <a href="post.php?id='.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
+				<h2><a href="Home/Post/'.$row['id'].'">'.$row['title'].'</a></h2>
+				<h4>'.date::convert($row['date']).', By <a href="Home/Search/1/'.$row['author'].'">'.$row['author'].'</a></h4>
+				 <a href="Home/Post/'.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
 				<p>
 					'.data_short::short($row['content'],$limit).'
 				</p>
 				<div class="readmore clear">
-					<a href="post.php?id='.$row['id'].'">Read More</a>
+					<a href="Home/Post/'.$row['id'].'">Read More</a>
 				</div>
 			</div>';
 		}
 		
 			if($page-1>=1){
-				echo '<a href="category.php?page='.($page-1).'&category='.$cat.'" class="ml" id="left">Less</a>';
+				echo '<a href="Home/Category/Page/'.($page-1).'/'.$cat.'" class="ml" id="left">Less</a>';
 			}
 			if($page+1<=$totalpage){
-				echo '<a href="category.php?page='.($page+1).'&category='.$cat.'" class="ml" id="right">More</a>';
+				echo '<a href="Home/Category/Page/'.($page+1).'/'.$cat.'" class="ml" id="right">More</a>';
 			}
 		?>
 		</div>

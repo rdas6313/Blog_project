@@ -1,0 +1,13 @@
+ErrorDocument 404 /blog/404.php
+RewriteEngine on
+RewriteRule ^Home/Contact$ contact.php [NC,L]
+RewriteRule ^Home$ index.php [NC,L]
+RewriteRule ^Home/([0-9]+$) index.php?page=$1 [NC,L]
+RewriteRule ^Home/Post/([0-9]+$) post.php?id=$1 [NC,L]
+RewriteRule ^Home/Page/([0-9]+$) page.php?pageid=$1 [NC,L]
+RewriteRule ^Home/Category/([0-9]+$) category.php?category=$1 [NC,L]
+RewriteRule ^Home/Category/Page/([0-9]+)/([0-9]+$) category.php?page=$1&category=$2 [NC,L]
+RewriteRule ^Home/Search$ search.php [NC,L]
+RewriteRule ^Home/Search/([0-9]+)/([a-zA-Z]+$) search.php?page=$1&search=$2 [NC,L]
+
+

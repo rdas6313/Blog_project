@@ -9,7 +9,7 @@ $statement 	   = $database_conn->query($query);
 					<ul>
 						<?php
 						while($row = $statement->fetch()){
-							echo '<li><a href="category.php?category='.$row['id'].'">'.$row['category'].'</a></li>';
+							echo '<li><a href="Home/Category/'.$row['id'].'">'.$row['category'].'</a></li>';
 					}
 						?>
 					</ul>
@@ -24,8 +24,8 @@ $statement 	   = $database_conn->query($query);
 				<?php
 					while($row=$statement->fetch()){
 					echo '<div class="popular clear">
-						<h3><a href="post.php?id='.$row['id'].'">'.$row['title'].'</a></h3>
-						<a href="post.php?id='.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
+						<h3><a href="Home/Post/'.$row['id'].'">'.$row['title'].'</a></h3>
+						<a href="Home/Post/'.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
 						'.data_short::short($row['content'],$limit).'	
 					</div>';
 				}

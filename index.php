@@ -20,12 +20,12 @@
 			if($statement->rowCount()>0){
 					while($row = $statement->fetch()){
 						echo '<div class="samepost clear">
-							<h2><a href="post.php?id='.$row['id'].'">'.$row['title'].'</a></h2>
-							<h4>'.date::convert($row['date']).', By <a href="search.php?search='.$row['author'].'">'.$row['author'].'</a></h4>
-							 <a href="post.php?id='.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
+							<h2><a href="Home/Post/'.$row['id'].'">'.$row['title'].'</a></h2>
+							<h4>'.date::convert($row['date']).', By <a href="Home/Search/1/'.$row['author'].'">'.$row['author'].'</a></h4>
+							 <a href="Home/Post/'.$row['id'].'"><img src="post_image/'.$row['img'].'" alt="post image"/></a>
 							'.data_short::short($row['content'],250).'
 							<div class="readmore clear">
-								<a href="post.php?id='.$row['id'].'">Read More</a>
+								<a href="Home/Post/'.$row['id'].'">Read More</a>
 							</div>
 						</div>';
 				}
@@ -35,10 +35,10 @@
 			$totalpost 	= $statement->rowCount();
 			$totalpage  = ceil($totalpost/$per_page); 
 			if($page-1 >= 1){
-				echo '<a href="index.php?page='.($page-1).'" class="ml" id="left">Less</a>';
+				echo '<a href="Home/'.($page-1).'" class="ml" id="left">Less</a>';
 			}
 			if($page+1 <= $totalpage){
-				echo '<a href="index.php?page='.($page+1).'" class="ml" id="right">More</a>';
+				echo '<a href="Home/'.($page+1).'" class="ml" id="right">More</a>';
 			}
 			
 		//page_ination end

@@ -6,14 +6,14 @@
 				$query 		   = "SELECT * FROM page_table";
 				$statement     = $database_conn->query($query);	
 			?>
-			<li><a href="index.php">Home</a></li>
+			<li><a href="Home">Home</a></li>
 			<?php 
 				if($statement->rowCount()>0){
 					while($row = $statement->fetch()){
 			?>
-				<li><a href="page.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
+				<li><a href="Home/Page/<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
 			<?php } }?>
-			<li><a href="contact.php">Contact</a></li>
+			<li><a href="Home/Contact">Contact</a></li>
 		</ul>
 	  </div>
 	<?php
@@ -29,10 +29,10 @@
 	  $row 		 = $statement->fetch();
 	?>
 	<div class="fixedicon clear">
-		<a href="http://www.<?php echo $row['fb'];?>"><img src="images/fb.png" alt="Facebook"/></a>
-		<a href="http://www.<?php echo $row['tw'];?>"><img src="images/tw.png" alt="Twitter"/></a>
-		<a href="http://www.<?php echo $row['ln'];?>"><img src="images/in.png" alt="LinkedIn"/></a>
-		<a href="http://www.<?php echo $row['gp'];?>"><img src="images/gl.png" alt="GooglePlus"/></a>
+		<a href="http://www.<?php echo $row['fb'];?>" target="_blank"><img src="images/fb.png" alt="Facebook"/></a>
+		<a href="http://www.<?php echo $row['tw'];?>" target="_blank" ><img src="images/tw.png" alt="Twitter"/></a>
+		<a href="http://www.<?php echo $row['ln'];?>" target="_blank" ><img src="images/in.png" alt="LinkedIn"/></a>
+		<a href="http://www.<?php echo $row['gp'];?>" target="_blank" ><img src="images/gl.png" alt="GooglePlus"/></a>
 	</div>
 <script type="text/javascript" src="js/scrolltop.js"></script>
 </body>

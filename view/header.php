@@ -7,30 +7,46 @@ include_once 'config/validation.php';
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="/blog/">
 	<?php
 		$pageid 	= NULL;
 		$pagename 	= NULL;
 		$database_conn = new DB; 
 		if(isset($_GET['pageid']) && !empty($_GET['pageid'])){
+			if(!preg_match('/^[0-9]+$/',$_GET['pageid']))
+				header('Location: 404.php');
 			$pageid 	= $_GET['pageid'];
 			$query		= "SELECT * FROM page_table WHERE id=$pageid";
 			$statement	= $database_conn->query($query);
+			if($statement->rowCount()==0){
+				header('Location: 404.php');
+			}
 			$row 		= $statement->fetch();
 	?>
 			<title><?php echo $row['title'];?></title>
 	<?php				
 		}else if(isset($_GET['id']) && !empty($_GET['id'])){
+			if(!preg_match('/^[0-9]+$/',$_GET['id']))
+				header('Location: 404.php');
 			$id 		= $_GET['id'];
 			$query		= "SELECT * FROM content_table WHERE id=$id";
 			$statement	= $database_conn->query($query);
+			if($statement->rowCount()==0){
+				header('Location: 404.php');
+			}
 			$row 		= $statement->fetch();
 	?>
 			<title><?php echo $row['title'];?></title>
 	<?php
 		}else if(isset($_GET['category']) && !empty($_GET['category'])){
+			if(!preg_match('/^[0-9]+$/',$_GET['category']))
+				header('Location: 404.php');
 			$cat 		= $_GET['category'];
 			$query		= "SELECT * FROM category_table WHERE id=$cat";
 			$statement	= $database_conn->query($query);
+			if($statement->rowCount()==0){
+				header('Location: 404.php');
+			}
 			$row 		= $statement->fetch();
 	?>
 			<title><?php echo $row['category'].' category Results';?></title>
@@ -99,7 +115,7 @@ $(window).load(function() {
 
 <body>
 	<div class="headersection templete clear">
-		<a href="index.php">	
+		<a href="Home">	
 			<div class="logo">
 				<?php
 					$database_conn = new DB;
@@ -122,14 +138,14 @@ $(window).load(function() {
 				$row 		   = $statement->fetch();
 				if($statement->rowCount()>0){	
 			?>
-				<a href="<?php echo $row['fb'];?>" target="_blank"><i class="fa fa-facebook"></i></a>
-				<a href="<?php echo $row['tw'];?>" target="_blank"><i class="fa fa-twitter"></i></a>
-				<a href="<?php echo $row['ln'];?>" target="_blank"><i class="fa fa-linkedin"></i></a>
-				<a href="<?php echo $row['gp'];?>" target="_blank"><i class="fa fa-google-plus"></i></a>
+				<a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+				<a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+				<a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+				<a href="#" target="_blank"><i class="fa fa-google-plus"></i></a>
 			<?php } ?>
 			</div>
 			<div class="searchbtn clear">
-			<form action="search.php" method="get">
+			<form action="Home/Search" method="post">
 				<input type="text" name="search" placeholder="Search keyword..."/>
 				<input type="submit" name="submit" value="Search"/>
 			</form>
@@ -142,13 +158,13 @@ $(window).load(function() {
 			$query 		   = "SELECT * FROM page_table";
 			$statement     = $database_conn->query($query);	
 		?>
-		<li><a <?php if($pagename=='Home') echo 'id="active"';?> href="index.php">Home</a></li>
+		<li><a <?php if($pagename=='Home') echo 'id="active"';?> href="Home">Home</a></li>
 		<?php 
 			if($statement->rowCount()>0){
 				while($row = $statement->fetch()){
 		?>
-		<li><a <?php if($pageid==$row['id']) echo 'id="active"'; ?> href="page.php?pageid=<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
+		<li><a <?php if($pageid==$row['id']) echo 'id="active"'; ?> href="Home/Page/<?php echo $row['id'];?>"><?php echo $row['title'];?></a></li>
 		<?php } }?>
-		<li><a <?php if($pagename=='contact') echo 'id="active"';?> href="contact.php">Contact</a></li>
+		<li><a <?php if($pagename=='contact') echo 'id="active"';?> href="Home/Contact">Contact</a></li>
 	</ul>
 </div>

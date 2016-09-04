@@ -1,9 +1,9 @@
 <?php include 'inc/header.php'; ?>
 <?php
     if($user_role!=1)
-        header('Location: index.php');
+        header('Location: /blog/admin');
     if(!isset($_GET['pageid']) || empty($_GET['pageid'])){
-        header('Location: index.php');
+        header('Location: /blog/admin');
     }else{
         $pageid = $_GET['pageid'];
     } 
@@ -14,7 +14,7 @@
                     $query      = "DELETE FROM page_table WHERE id=$pageid";
                     $statement  = $database_conn->delete($query);
                     if($statement){
-                        header('Location: index.php');
+                        header('Location: /blog/admin');
                     }else{
                          $msg = '<span style="color:red;font-size:18px">Unable TO Delete Page!</span>';
                     }

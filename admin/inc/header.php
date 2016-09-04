@@ -7,7 +7,7 @@
     ob_start();
     if(!session::check() || (isset($_GET['action']) && $_GET['action']=='logout')){
         session::end();
-        header('location:login.php');
+        header('location: login.php');
     }else{
         $user_name = session::get('username');
         $user_id   = session::get('id');
@@ -17,6 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Update Title and Description | Admin</title>
     <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
@@ -77,12 +78,12 @@
                     <img src="img/livelogo.png" alt="Logo" />
 				</div>
 				<div class="floatleft middle">
-					<h1>Training with live project</h1>
-					<p>www.trainingwithliveproject.com</p>
+					<h1>Admin Panel</h1>
+					<p>Welcome To Admin Panel</p>
 				</div>
                 <div class="floatright">
                     <div class="floatleft">
-                        <img src="img/img-profile.jpg" alt="Profile Pic" /></div>
+                    </div>
                     <div class="floatleft marginleft10">
                         <ul class="inline-ul floatleft">
                             <li>Hello <?php echo $user_name;?></li>
@@ -117,7 +118,7 @@
 				<li class="ic-typography"><a href="editprofile.php"><span>Edit Profile</span></a></li>
                 <?php if($user_role==1){?>
 				<li class="ic-grid-tables"><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="inbox.php"><span>Inbox<?php if($msg>0)echo '('.$msg.')';?></span></a></li>
-                <li class="ic-charts"><a href="#"><span>Visit Website</span></a></li>
+                <li class="ic-charts"><a href="/blog" target="_blank"><span>Visit Website</span></a></li>
                 <li class="ic-charts"><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="adduser.php"><span>Add User</span></a></li>
                 <li class="ic-charts"><a onclick="<?php if($user_role!=1)echo 'alert(\'You Have No permission To Access!\');';?>" href="userlist.php"><span>User List</span></a></li>
                 <?php }?>

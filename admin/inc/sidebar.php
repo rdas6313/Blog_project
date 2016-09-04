@@ -26,7 +26,7 @@
                                 <?php
                             }	}
                                 ?>
-                                <li><a>Contact Us</a></li>
+                                <!--<li><a>Contact Us</a></li>-->
                             </ul>
                         </li>
                          <li><a class="menuitem">Slide Option</a>

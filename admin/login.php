@@ -3,7 +3,7 @@
 	include '../config/db_connection.php';
 	include 'lib/session.php';
 	if(session::check()){
-		header('location:index.php');
+		header('location: index.php');
 	}
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
 					session::set('username',$row['username']);
 					session::set('role',$row['role']);
 					session::set('name',$row['name']);
-					header('location:index.php');
+					header('location: index.php');
 
 				}else{
 					echo '<span style="color:red;font-size=18px;">Username Or Password Not matched</span>';	
